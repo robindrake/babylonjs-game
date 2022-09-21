@@ -4,8 +4,9 @@
   "description": "Following a tutorial at https://doc.babylonjs.com/guidedLearning/createAGame/gettingSetUp",
   "main": "app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+	  "build": "webpack",
+	  "start": "webpack-dev-server --port 8080"
+ },
   "author": "Robyn Drake",
   "license": "MIT",
   "devDependencies": {
