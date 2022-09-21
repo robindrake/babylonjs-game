@@ -44,5 +44,15 @@ class App {
             this._scene.render();
         });
     }
+
+    private _createCanvas(): HTMLCanvasElement {
+        this._canvas = document.createElement("canvas");
+        this._canvas.width = 1024;
+        this._canvas.height = 768;
+        this._canvas.id = "gameCanvas";
+        document.body.appendChild(this._canvas);
+        return this._canvas;
+
+    }
 }
 new App();
