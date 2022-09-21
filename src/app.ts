@@ -3,51 +3,46 @@ import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
 import {Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder } from "@babylonjs/core";
 
+//enum for states
+enum State { START = 0, GAME = 1, LOSE = 2, CUTSCENE = 3 }
+
 class App {
+    // General Entire Application
+    private _scene: Scene;
+    private _canvas: HTMLCanvasElement;
+    private _engine: Engine;
+
+    //Scene - related
+    private _state: number = 0;
+
     constructor() {
-        //set up canvas
-        var canvas = document.createElement("canvas");
-        canvas.style.width = "1024px";
-        canvas.style.height = "768px";
-        canvas.id = "gameCanvas";
-        document.body.appendChild(canvas);
+        this._canvas = this._createCanvas();
 
-        //Initialize babylon scene and engine
-        var engine = new Engine(canvas, true);
-        var scene = new Scene(engine);
-        
-        //Set up Camera and Light
-        var camera: ArcRotateCamera = new ArcRotateCamera(
-            "Camera",
-            Math.PI / 2,
-            Math.PI / 2,
-            2,
-            Vector3.Zero(),
-            scene
-        );
-        camera.attachControl(canvas, true);
+        // initialize babylon scene and engine
+        this._engine = new Engine(this._canvas, true);
+        this._scene = new Scene(this._engine);
 
-        var light1: HemisphericLight = new HemisphericLight("light1", new Vector3(1, 1, 0), scene);
+        var camera: ArcRotateCamera = new ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 2, Vector3.Zero(), this._scene);
+        camera.attachControl(this._canvas, true);
+        var light1: HemisphericLight = new HemisphericLight("light1", new Vector3(1, 1, 0), this._scene);
+        var sphere: Mesh = MeshBuilder.CreateSphere("sphere", { diameter: 1 }, this._scene);
 
-        //Add a sphere
-        var sphere: Mesh = MeshBuilder.CreateSphere("sphere", { diameter: 0.5 }, scene);
-
-        //Hide / show the inspector
+        // hide/show the Inspector
         window.addEventListener("keydown", (ev) => {
-            if(ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 72) {
-                if(scene.debugLayer.isVisible()) {
-                    scene.debugLayer.hide();
+            // Shift+Ctrl+Alt+I
+            if (ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 73) {
+                if (this._scene.debugLayer.isVisible()) {
+                    this._scene.debugLayer.hide();
                 } else {
-                    scene.debugLayer.show();
+                    this._scene.debugLayer.show();
                 }
             }
         });
 
-        //The main render loop
-        engine.runRenderLoop(() => {
-            scene.render();
+        // run the main render loop
+        this._engine.runRenderLoop(() => {
+            this._scene.render();
         });
     }
 }
-
 new App();
