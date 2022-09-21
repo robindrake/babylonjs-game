@@ -7,8 +7,8 @@ class App {
     constructor() {
         //set up canvas
         var canvas = document.createElement("canvas");
-        canvas.style.width = "1000px";
-        canvas.style.height = "1000px";
+        canvas.style.width = "1024px";
+        canvas.style.height = "768px";
         canvas.id = "gameCanvas";
         document.body.appendChild(canvas);
 
@@ -28,6 +28,9 @@ class App {
         camera.attachControl(canvas, true);
 
         var light1: HemisphericLight = new HemisphericLight("light1", new Vector3(1, 1, 0), scene);
+
+        //Add a sphere
+        var sphere: Mesh = MeshBuilder.CreateSphere("sphere", { diameter: 0.5 }, scene);
 
         //Hide / show the inspector
         window.addEventListener("keydown", (ev) => {
