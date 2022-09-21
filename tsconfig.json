@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "noResolve": false,
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "lib": [
+            "dom",
+            "es6"
+        ],
+        "rootDir": "src"
+    }
+}
