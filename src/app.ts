@@ -4,59 +4,33 @@ import "@babylonjs/loaders/glTF";
 import {Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder } from "@babylonjs/core";
 
 class App {
-    // General Entire Application
-    private _scene: Scene;
-    private _canvas: HTMLCanvasElement;
-    private _engine: Engine;
-    private _light: HemisphericLight;
-    private _box: Mesh;
-    private _camera: ArcRotateCamera;
-    
     constructor() {
-        this._canvas = this._createCanvas();
+        var canvas = document.createElement("canvas");
+        canvas.style.width = "800px";
+        canvas.style.height = "600px";
+        canvas.id = "gameCanvas";
+        document.body.appendChild(canvas);
 
-        // initialize babylon scene and engine
-        this._engine = new Engine(this._canvas, true);
-        this._scene = this._createScene();
+        var engine = new Engine(canvas, true);
+        var scene = new Scene(engine);
 
-        
+        var camera = new ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 2, Vector3.Zero(), scene);
+        camera.attachControl(canvas, true);
+        var light1 = new HemisphericLight("light1", new Vector3(1, 1, 0), scene);
+        var sphere = MeshBuilder.CreateSphere("sphere", {diameter: 1}, scene);
 
-        // run the main render loop
-        this._engine.runRenderLoop(() => {
-            this._scene.render();
+        window.addEventListener("keydown", (ev) => {
+            if(ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 73) {
+                if(scene.debugLayer.isVisible())
+                    scene.debugLayer.hide();
+                else
+                    scene.debugLayer.show();
+            }
         });
-    }
 
-    private _createScene(): Scene {
-        this._scene = new Scene(this._engine);
-
-        this._camera = new ArcRotateCamera(
-            "camera",
-            -Math.PI / 2,
-            -Math.PI / 2.5,
-            3,
-            new Vector3(0, 0, 0)
-        );
-
-        this._light = new HemisphericLight(
-            "light",
-            new Vector3(0, 1, 0),
-            this._scene
-        );
-
-        this._box = MeshBuilder.CreateBox("box", {}, this._scene);
-
-        return this._scene;
-    }
-
-    private _createCanvas(): HTMLCanvasElement {
-        this._canvas = document.createElement("canvas");
-        this._canvas.width = 1024;
-        this._canvas.height = 768;
-        this._canvas.id = "gameCanvas";
-        document.body.appendChild(this._canvas);
-        return this._canvas;
+        engine.runRenderLoop(() => {
+            scene.render();
+        });
 
     }
 }
-new App();
