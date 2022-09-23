@@ -10,6 +10,7 @@ class App {
     private _engine: Engine;
     private _light: HemisphericLight;
     private _box: Mesh;
+    private _ground: Mesh;
     private _camera: ArcRotateCamera;
     
     constructor() {
@@ -44,15 +45,18 @@ class App {
             this._scene
         );
 
-        this._box = MeshBuilder.CreateBox("box", {}, this._scene);
+        this._ground = MeshBuilder.CreateGround("ground", {width: 10, height: 10}, this._scene);
+
+        //this._box = MeshBuilder.CreateBox("box", {}, this._scene);
+        //this._box.position.y = 0.5;
 
         return this._scene;
     }
 
     private _createCanvas(): HTMLCanvasElement {
         this._canvas = document.createElement("canvas");
-        this._canvas.width = 1024;
-        this._canvas.height = 768;
+        this._canvas.width = 800;
+        this._canvas.height = 600;
         this._canvas.id = "gameCanvas";
         document.body.appendChild(this._canvas);
         return this._canvas;
