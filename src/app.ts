@@ -36,3 +36,4 @@ class App {
 }
 
 new App();
+//It works!
