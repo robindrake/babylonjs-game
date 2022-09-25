@@ -2,11 +2,7 @@
   "name": "myapp",
   "version": "0.0.1",
   "description": "Following a tutorial at https://doc.babylonjs.com/guidedLearning/createAGame/gettingSetUp",
-  "main": "app.ts",
-  "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server --port 8080"
-  },
+  "main": "public/server.js",
   "author": "Robyn Drake",
   "license": "MIT",
   "devDependencies": {
