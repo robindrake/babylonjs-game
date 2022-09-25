@@ -35,4 +35,4 @@ class App {
     }
 }
 
-var app = new App();
+new App();
