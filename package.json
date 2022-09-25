@@ -2,7 +2,7 @@
   "name": "myapp",
   "version": "0.0.1",
   "description": "Following a tutorial at https://doc.babylonjs.com/guidedLearning/createAGame/gettingSetUp",
-  "main": "public/server.js",
+  "main": "server.js",
   "author": "Robyn Drake",
   "license": "MIT",
   "devDependencies": {
