@@ -5,6 +5,7 @@
         "moduleResolution": "Node",
         "noResolve": false,
         "noImplicitAny": false,
+        "allowSyntheticDefaultImports": true,
         "sourceMap": true,
         "lib": [
             "dom",
