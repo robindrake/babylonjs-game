@@ -6,6 +6,7 @@
         "noResolve": false,
         "noImplicitAny": false,
         "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
         "sourceMap": true,
         "lib": [
             "dom",
