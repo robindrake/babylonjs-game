@@ -1,0 +1,34 @@
+class Combat
+	class Weapon
+	class shield
+
+class Skill
+	class Unarmed
+	class Arcane
+	class Divine
+	class Technique
+
+class Mob
+	class Player
+		class Fighter
+		class Monk
+		class Caster
+		class Cleric
+
+Player:
+	hasa Combat -> Weapon
+	hasa Combat -> Shield
+	hasa Skill
+
+fighter:
+	hasa Skill->Technique
+
+Monk:
+	hasa Skill->Unarmed
+
+Caster:
+	hasa Skill->Arcane
+
+Cleric:
+	hasa Skill->Divine
+
