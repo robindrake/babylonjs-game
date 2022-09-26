@@ -1,2 +1,8 @@
-1.	Finish https://doc.babylonjs.com/start/chap1/first_scene
-2. Starting over, following the above url explicitly
+Not following Semver
+0.0.0.1 completion of Tutorial
+	Done
+0.0.0.2 Class System starting
+0.0.0.3 Start of Combat System  
+    May use something like Strike, Block, Round 2, etc.
+0.0.1.0 Initial Deployment
+0.0.1.1 Refactor
