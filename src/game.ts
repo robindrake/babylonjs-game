@@ -78,7 +78,37 @@ class App {
     }
 
     private _goToCutScene() {
-        
+
+    }
+
+    private async _goToLose(): Promise<void> {
+        this._engine.displayLoadingUI();
+
+        //Scene Setup
+        this._scene.detachControl();
+        let scene = new Scene(this._engine);
+        scene.clearColor = new Color4(0, 0, 0, 1);
+        let camera = new FreeCamera("camera1", new Vector3(0, 0, 0), scene);
+        camera.setTarget(Vector3.Zero());
+
+        //GUI
+        const guiMenu = AdvancedDynamicTexture.CreateFullscreenUI("UI");
+        const mainBtn = Button.CreateSimpleButton("mainmenu", "Main Menu");
+        mainBtn.width = 0.2
+        mainBtn.height = "40px";
+        mainBtn.color = "white";
+        guiMenu.addControl(mainBtn);
+        mainBtn.onPointerClickObservable.add(() => {
+            this._goToStart();
+        });
+
+        //Scene Finished Loading
+        await scene.whenReadyAsync();
+        this._engine.hideLoadingUI();   //When the scene is ready, hide loading
+        //lastly, set the current state to the loase state and set the scene to the lose scene
+        this._scene.dispose();
+        this._scene = scene;
+        this._state = State.LOSE;
     }
 
     private _createCanvas(): HTMLCanvasElement {
