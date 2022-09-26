@@ -3,4 +3,3 @@ dist
 .vscode
 launch.json
 src/*.js
-public/index.html
