@@ -7,11 +7,12 @@
         "noImplicitAny": false,
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
-        "sourceMap": true,
+        "sourceMap": false,
         "lib": [
             "dom",
             "es6"
         ],
-        "rootDir": "src"
+        "rootDir": "src",
+        "outDir": "dist"
     }
 }
