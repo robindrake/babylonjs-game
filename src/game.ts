@@ -1,7 +1,8 @@
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
-import {Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder } from "@babylonjs/core";
+import {Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder, 
+    Color4, FreeCamera } from "@babylonjs/core";
 
 enum State { START = 0, GAME = 1, LOSE = 2, CUTSCENE = 3 }
 
@@ -36,6 +37,15 @@ class App {
         this._engine.runRenderLoop(() => {
             this._scene.render();
         });
+    }
+
+    private _goToStart() {
+        this._engine.displayLoadingUI();
+        this._scene.detachControl();
+        let scene = new Scene(this._engine);
+        scene.clearColor = new Color4(0, 0, 0, 1);
+        let camera = new FreeCamera("camera1", new Vector3(0, 0, 0), scene);
+        camera.setTarget(Vector3.Zero());
     }
 
     private _createCanvas(): HTMLCanvasElement {
