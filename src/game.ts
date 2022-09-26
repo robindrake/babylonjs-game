@@ -3,6 +3,7 @@ import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
 import {Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder, 
     Color4, FreeCamera } from "@babylonjs/core";
+import {AdvancedDynamicTexture, Button, Control} from "@babylonjs/gui";
 
 enum State { START = 0, GAME = 1, LOSE = 2, CUTSCENE = 3 }
 
@@ -39,13 +40,45 @@ class App {
         });
     }
 
-    private _goToStart() {
+    private async _goToStart() {
         this._engine.displayLoadingUI();
         this._scene.detachControl();
         let scene = new Scene(this._engine);
         scene.clearColor = new Color4(0, 0, 0, 1);
         let camera = new FreeCamera("camera1", new Vector3(0, 0, 0), scene);
         camera.setTarget(Vector3.Zero());
+
+        //... Gui related Stuff
+        const guiMenu = AdvancedDynamicTexture.CreateFullscreenUI("UI");
+        guiMenu.idealHeight = 720;
+
+        //create a simple button
+        const startBtn = Button.CreateSimpleButton("Start", "Play");
+        startBtn.width = 0.2;
+        startBtn.height = "40px";
+        startBtn.color = "white";
+        startBtn.top = "-14px";
+        startBtn.thickness = 0;
+        startBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
+        guiMenu.addControl(startBtn);
+
+        //this handles interactions with the start button attached to the scene
+        startBtn.onPointerDownObservable.add(() => {
+            this._goToCutScene();
+            scene.detachControl();  //observables disables
+        });
+
+        //--Scene Finished Loading--
+        await scene.whenReadyAsync();
+        this._engine.hideLoadingUI();
+        //Lastly, set the current state to the start state, and set the scene to the start scene
+        this._scene.dispose();
+        this._scene = scene;
+        this._state = State.START;
+    }
+
+    private _goToCutScene() {
+        
     }
 
     private _createCanvas(): HTMLCanvasElement {
