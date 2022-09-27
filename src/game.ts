@@ -15,6 +15,7 @@ class App {
     private _engine: BABYLON.Engine;
     private _state: number = 0;
     private _ground: BABYLON.GroundMesh;
+    private _camera: BABYLON.FreeCamera;
 
     constructor() {
         this._canvas = this._createCanvas();
@@ -113,6 +114,13 @@ class App {
         skyboxMaterial.backFaceCulling = false;
         skyboxMaterial.disableLighting = true;
         skybox.material = skyboxMaterial;
+
+        this._camera = BABYLON.FreeCamera("camera1",  new BABYLON.Vector3(0, 5, -10), scene);
+        // Targets the camera to scene origin
+        this._camera.setTarget(BABYLON.Vector3.Zero());
+        // This attaches the camera to the canvas
+        this._camera.attachControl(canvas, true);
+
         return scene;
     }
 }
