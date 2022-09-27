@@ -2,7 +2,7 @@ import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
 import {Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder, 
-    Color4, FreeCamera, GroundMesh } from "@babylonjs/core";
+    Color4, FreeCamera, GroundMesh, StandardMaterial } from "@babylonjs/core";
 import {AdvancedDynamicTexture, Button, Control} from "@babylonjs/gui";
 
 enum State { START = 0, GAME = 1, LOSE = 2, CUTSCENE = 3 }
@@ -17,7 +17,8 @@ class App {
 
     constructor() {
         this._canvas = this._createCanvas();
-        
+        this._engine = new Engine(this._canvas);
+        this._scene = this._createScene();
     }
     /*
     private async _goToStart() {
@@ -98,6 +99,16 @@ class App {
         canvas.id = "gameCanvas";
         document.body.appendChild(canvas);
         return canvas;
+    }
+
+    private _createScene(): Scene {
+        let scene = new Scene(this._engine);
+        let skybox = Mesh.CreateBox("skybox", 100.0, scene);
+        let skyboxMaterial = new StandardMaterial("skybox", scene);
+        skyboxMaterial.backFaceCulling = false;
+        skyboxMaterial.disableLighting = true;
+        skybox.material = skyboxMaterial;
+        return scene;
     }
 }
 
