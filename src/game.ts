@@ -17,23 +17,9 @@ class App {
 
     constructor() {
         this._canvas = this._createCanvas();
-
-        //initialize babylon scene and engine
-        this._engine = new Engine(this._canvas, true);
-        this._scene = new Scene(this._engine);
         
-        var camera = new FreeCamera("camera1", new Vector3(0, 5, -10), this._scene);
-        camera.setTarget(Vector3.Zero());
-        camera.attachControl(this._canvas, true);
-        var light1 = new HemisphericLight("light1", new Vector3(0, 1, 0), this._scene);
-        const sphere = MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, this._scene);
-        this._ground = MeshBuilder.CreateGround("ground", {width: 6, height: 6}, this._scene);
-        
-        this._engine.runRenderLoop(() => {
-            this._scene.render();
-        });
     }
-
+    /*
     private async _goToStart() {
         this._engine.displayLoadingUI();
         this._scene.detachControl();
@@ -104,7 +90,7 @@ class App {
         this._scene = scene;
         this._state = State.LOSE;
     }
-
+    */
     private _createCanvas(): HTMLCanvasElement {
         var canvas = document.createElement("canvas");
         canvas.style.width = "800px";
