@@ -2,7 +2,7 @@ import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
 import {Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder, 
-    Color4, FreeCamera } from "@babylonjs/core";
+    Color4, FreeCamera, GroundMesh } from "@babylonjs/core";
 import {AdvancedDynamicTexture, Button, Control} from "@babylonjs/gui";
 
 enum State { START = 0, GAME = 1, LOSE = 2, CUTSCENE = 3 }
@@ -13,6 +13,7 @@ class App {
     private _canvas: HTMLCanvasElement;
     private _engine: Engine;
     private _state: number = 0;
+    private _ground: GroundMesh;
 
     constructor() {
         this._canvas = this._createCanvas();
@@ -21,20 +22,13 @@ class App {
         this._engine = new Engine(this._canvas, true);
         this._scene = new Scene(this._engine);
         
-        var camera = new ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 2, Vector3.Zero(), this._scene);
+        var camera = new FreeCamera("camera1", new Vector3(0, 5, -10), this._scene);
+        camera.setTarget(Vector3.Zero());
         camera.attachControl(this._canvas, true);
-        var light1 = new HemisphericLight("light1", new Vector3(1, 1, 0), this._scene);
-        var sphere = MeshBuilder.CreateSphere("sphere", {diameter: 0.25}, this._scene);
-
-        window.addEventListener("keydown", (ev) => {
-            if(ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 73) {
-                if(this._scene.debugLayer.isVisible())
-                    this._scene.debugLayer.hide();
-                else
-                    this._scene.debugLayer.show();
-            }
-        });
-
+        var light1 = new HemisphericLight("light1", new Vector3(0, 1, 0), this._scene);
+        const sphere = MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, this._scene);
+        this._ground = MeshBuilder.CreateGround("ground", {width: 6, height: 6}, this._scene);
+        
         this._engine.runRenderLoop(() => {
             this._scene.render();
         });
