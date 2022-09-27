@@ -119,11 +119,10 @@ class App {
         // Targets the camera to scene origin
         this._camera.setTarget(BABYLON.Vector3.Zero());
         // This attaches the camera to the canvas
-        this._camera.attachControl(canvas, true);
+        this._camera.attachControl(this._canvas, true);
 
         return scene;
     }
 }
 
 new App();
-//It works!
