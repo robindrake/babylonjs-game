@@ -1,24 +1,29 @@
+/*
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
 import {Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder, 
     Color4, FreeCamera, GroundMesh, StandardMaterial } from "@babylonjs/core";
 import {AdvancedDynamicTexture, Button, Control} from "@babylonjs/gui";
-
+*/
 enum State { START = 0, GAME = 1, LOSE = 2, CUTSCENE = 3 }
 
 class App {
 
-    private _scene: Scene;
+    private _scene: BABYLON.Scene;
     private _canvas: HTMLCanvasElement;
-    private _engine: Engine;
+    private _engine: BABYLON.Engine;
     private _state: number = 0;
-    private _ground: GroundMesh;
+    private _ground: BABYLON.GroundMesh;
 
     constructor() {
         this._canvas = this._createCanvas();
-        this._engine = new Engine(this._canvas);
+        this._engine = new BABYLON.Engine(this._canvas);
         this._scene = this._createScene();
+
+        this._engine.runRenderLoop(() => {
+            this._scene.render();
+        });
     }
     /*
     private async _goToStart() {
@@ -102,9 +107,9 @@ class App {
     }
 
     private _createScene(): Scene {
-        let scene = new Scene(this._engine);
-        let skybox = Mesh.CreateBox("skybox", 100.0, scene);
-        let skyboxMaterial = new StandardMaterial("skybox", scene);
+        let scene = new BABYLON.Scene(this._engine);
+        let skybox = BABYLON.Mesh.CreateBox("skybox", 100.0, scene);
+        let skyboxMaterial = new BABYLON.StandardMaterial("skybox", scene);
         skyboxMaterial.backFaceCulling = false;
         skyboxMaterial.disableLighting = true;
         skybox.material = skyboxMaterial;
